@@ -6,7 +6,7 @@ import { StatusBar } from '@ionic-native/status-bar';
 
 import { MyApp } from './app.component';
 import { TabsPage } from '../pages/tabs/tabs';
-import { ShoppingListPage} from '../pages/shopping-list/shopping-list';
+import { ShoppingListPage } from '../pages/shopping-list/shopping-list';
 import { RecipesPage } from '../pages/recipes/recipes';
 import { RecipePage } from '../pages/recipe/recipe';
 import { EditRecipePage } from '../pages/edit-recipe/edit-recipe';
