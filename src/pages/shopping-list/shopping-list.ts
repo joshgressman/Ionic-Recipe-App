@@ -18,11 +18,7 @@ export class ShoppingListPage {
   }
 
   onAddItem(form: NgForm){
-    let ingredient = {
-      name: form.value.ingredientName,
-      amount: form.value.amount
-    }
-    this.shoppingListService.addIngedient(ingredient);
+    this.shoppingListService.addIngedient(form.value.ingredientName, form.value.amount );
   }
 
 }

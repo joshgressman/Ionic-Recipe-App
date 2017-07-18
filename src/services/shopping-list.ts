@@ -3,10 +3,10 @@ import { Ingredient } from '../models/ingredient';
 
 export class ShoppingListService {
 
- ingredients: Ingredient[] = [];
+ private ingredients: Ingredient[] = [];
 
- addIngedient(newIngredient: Ingredient){
-   this.ingredients.push(newIngredient);
+ addIngedient(name: string, amount: number){
+   this.ingredients.push(new Ingredient(name, amount));
    console.log("inggredients array", this.ingredients);
  }
 
