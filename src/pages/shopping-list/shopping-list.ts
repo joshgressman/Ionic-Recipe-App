@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { ShoppingListService } from '../../services/shopping-list';
-
+import { Ingredient } from '../../models/ingredient';
 
 @Component({
   selector: 'page-shopping-list',
@@ -9,16 +9,24 @@ import { ShoppingListService } from '../../services/shopping-list';
 })
 
 export class ShoppingListPage {
+  ingredients: Ingredient[];
 
   constructor(private shoppingListService: ShoppingListService) {
   }
 
-  ionViewDidLoad() {
-    console.log('ionViewDidLoad ShoppingListPage');
-  }
+   ionViewWillEnter(){
+      this.loadItems();
+   }
 
   onAddItem(form: NgForm){
-    this.shoppingListService.addIngedient(form.value.ingredientName, form.value.amount );
+    this.shoppingListService.addItem(form.value.ingredientName, form.value.amount );
+    form.reset();
+    this.loadItems();
+  }
+
+  //Helper method to load ingredients from the service upon updating
+  private loadItems(){
+     this.ingredients = this.shoppingListService.getItems();
   }
 
 }
