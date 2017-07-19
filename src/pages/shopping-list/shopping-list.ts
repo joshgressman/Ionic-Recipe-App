@@ -24,6 +24,11 @@ export class ShoppingListPage {
     this.loadItems();
   }
 
+  onRemove(index: number){
+   this.shoppingListService.removeItem(index);
+     this.loadItems();
+  }
+
   //Helper method to load ingredients from the service upon updating
   private loadItems(){
      this.ingredients = this.shoppingListService.getItems();
