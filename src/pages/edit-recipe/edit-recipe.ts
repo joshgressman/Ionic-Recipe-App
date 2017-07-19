@@ -6,7 +6,8 @@ import { NavParams } from 'ionic-angular';
   templateUrl: 'edit-recipe.html',
 })
 export class EditRecipePage implements OnInit {
-  mode = 'new';
+  mode = 'New';
+  selectOPtions = ['easy', 'medium', 'hard'];
 
   constructor(private navParams: NavParams){}
 
