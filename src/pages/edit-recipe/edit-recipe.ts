@@ -16,6 +16,11 @@ export class EditRecipePage implements OnInit {
 //Property being sent from the recipes page
 ngOnInit(){
  this.mode = this.navParams.get('mode');
+ this.initalizeForm();
+}
+
+onSubmit(){
+  console.log(this.recipeForm);
 }
 
 private initalizeForm() {
