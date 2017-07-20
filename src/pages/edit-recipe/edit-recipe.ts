@@ -23,6 +23,9 @@ onSubmit(){
   console.log(this.recipeForm);
 }
 
+onManageIngredients(){}
+
+//Helper function that creates an instance of the reactive form
 private initalizeForm() {
   this.recipeForm = new FormGroup({
    'title': new FormControl(null, Validators.required),
