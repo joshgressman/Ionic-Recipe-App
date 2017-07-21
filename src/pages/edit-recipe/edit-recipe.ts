@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormGroup, FormControl, Validators } from '@angular/forms';
+import { FormGroup, FormControl, Validators, FormArray } from '@angular/forms';
 import { NavParams } from 'ionic-angular';
 import { ActionSheetController, AlertController } from 'ionic-angular';
 
@@ -69,7 +69,7 @@ private createNewIngredientAlert(){
         text: 'Add',
         handler: data => {
           if(data.name.trim() == '' || data.name == null){
-            
+
           }
         }
       }
@@ -82,7 +82,8 @@ private initalizeForm() {
   this.recipeForm = new FormGroup({
    'title': new FormControl(null, Validators.required),
    'description': new FormControl(null, Validators.required ),
-   'difficulty': new FormControl('Medium', Validators.required)
+   'difficulty': new FormControl('Medium', Validators.required),
+   'ingredients': new FormArray([])
 
   });
 }
