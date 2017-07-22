@@ -24,7 +24,7 @@ onSubmit(){
   console.log(this.recipeForm);
 }
 
-//action sheet popup on click
+//action sheet popup on click will also take in inputs
 onManageIngredients(){
  const actionSheet = this.actionSheetCtrl.create({
    title: 'What do you want to do?',
