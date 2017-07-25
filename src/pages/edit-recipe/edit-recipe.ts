@@ -32,14 +32,20 @@ onManageIngredients(){
     {
       text: 'Add Ingredient',
       handler: () => {
-
+       this.createNewIngredientAlert().present();
       }
     },
    {
-     text: 'Remove all ingredients',
+     text: 'Remove all Ingredients',
      role: 'destructive',
      handler: () => {
-
+       const fArray: FormArray = <FormArray>this.recipeForm.get('ingredients');
+       const len = fArray.length;
+       if(len > 0){
+         for(let i = len - 1; i >= 0; i--){
+           fArray.removeAt(i);
+         }
+       }
       }
    },
    {
@@ -48,11 +54,11 @@ onManageIngredients(){
    }
   ]
  });
-
+  actionSheet.present();
 }
 
 private createNewIngredientAlert(){
-  const newIngredientAlert = this.alertCtrl.create({
+   return this.alertCtrl.create({
     title: 'Add Ingredient',
     inputs: [
       {
@@ -69,12 +75,14 @@ private createNewIngredientAlert(){
         text: 'Add',
         handler: data => {
           if(data.name.trim() == '' || data.name == null){
-
+            return;
           }
+          (<FormArray>this.recipeForm.get('ingredients')).push(new FormControl(data.name, Validators.required))
         }
       }
     ]
   });
+
 }
 
 //Helper function that creates an instance of the reactive form
