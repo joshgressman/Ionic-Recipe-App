@@ -32,7 +32,9 @@ onManageIngredients(){
     {
       text: 'Add Ingredient',
       handler: () => {
-       this.createNewIngredientAlert().present();
+        actionSheet.onDidDismiss(() => {
+          this.createNewIngredientAlert().present();
+      });
       }
     },
    {
@@ -55,7 +57,10 @@ onManageIngredients(){
   ]
  });
   actionSheet.present();
+
 }
+
+
 
 private createNewIngredientAlert(){
    return this.alertCtrl.create({
@@ -69,20 +74,22 @@ private createNewIngredientAlert(){
     buttons: [
       {
         text: 'Cancel',
-        role: 'cancel'
+        role: 'cancel',
+        handler: data => {
+         console.log('Cancel clicked');
+       }
       },
       {
         text: 'Add',
         handler: data => {
-          if(data.name.trim() == '' || data.name == null){
-            return;
+          if (data.name.trim() == '' || data.name == null){
+            return false;
           }
-          (<FormArray>this.recipeForm.get('ingredients')).push(new FormControl(data.name, Validators.required))
+          (<FormArray>this.recipeForm.get('ingredients')).push(new FormControl(data.name, Validators.required));
         }
       }
     ]
   });
-
 }
 
 //Helper function that creates an instance of the reactive form
