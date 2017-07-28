@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators, FormArray } from '@angular/forms';
 import { NavParams } from 'ionic-angular';
-import { ActionSheetController, AlertController } from 'ionic-angular';
+import { ActionSheetController, AlertController, ToastController } from 'ionic-angular';
 
 @Component({
   selector: 'page-edit-recipe',
@@ -12,7 +12,7 @@ export class EditRecipePage implements OnInit {
   selectOPtions = ['easy', 'medium', 'hard'];
   recipeForm: FormGroup;
 
-  constructor(private navParams: NavParams, private actionSheetCtrl: ActionSheetController, private alertCtrl: AlertController){}
+  constructor(private navParams: NavParams, private actionSheetCtrl: ActionSheetController, private alertCtrl: AlertController, private toastCtlr: ToastController){}
 
 //Property being sent from the recipes page
 ngOnInit(){
@@ -32,7 +32,8 @@ onManageIngredients(){
     {
       text: 'Add Ingredient',
       handler: () => {
-        actionSheet.onDidDismiss(() => {
+        actionSheet.onDidDismiss(() => { //onDidDismiss() was applied to correct the alert not canceling
+         //Alert being invoked from below
           this.createNewIngredientAlert().present();
       });
       }
@@ -47,6 +48,13 @@ onManageIngredients(){
          for(let i = len - 1; i >= 0; i--){
            fArray.removeAt(i);
          }
+         //Helper message when ingredients are deleted
+         const toast = this.toastCtlr.create({
+           message:'Ingredients have been deleted',
+           duration: 3000,
+           position: 'middle'
+         });
+          toast.present();
        }
       }
    },
@@ -83,6 +91,13 @@ private createNewIngredientAlert(){
         text: 'Add',
         handler: data => {
           if (data.name.trim() == '' || data.name == null){
+           //Helper message if the input is empty or invalid
+           const toast = this.toastCtlr.create({
+             message:'Please add a valid ingredient',
+             duration: 3000,
+             position: 'middle'
+           });
+            toast.present();
             return false;
           }
           (<FormArray>this.recipeForm.get('ingredients')).push(new FormControl(data.name, Validators.required));
