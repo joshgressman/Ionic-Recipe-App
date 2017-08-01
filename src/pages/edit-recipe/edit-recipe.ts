@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators, FormArray } from '@angular/forms';
 import { NavParams } from 'ionic-angular';
-import { ActionSheetController, AlertController, ToastController } from 'ionic-angular';
+import { ActionSheetController, AlertController, ToastController, NavController } from 'ionic-angular';
+import { RecipeService } from '../../services/recipe';
 
 @Component({
   selector: 'page-edit-recipe',
@@ -12,7 +13,12 @@ export class EditRecipePage implements OnInit {
   selectOPtions = ['easy', 'medium', 'hard'];
   recipeForm: FormGroup;
 
-  constructor(private navParams: NavParams, private actionSheetCtrl: ActionSheetController, private alertCtrl: AlertController, private toastCtlr: ToastController){}
+  constructor(private navParams: NavParams,
+              private actionSheetCtrl: ActionSheetController,
+              private alertCtrl: AlertController,
+              private toastCtlr: ToastController,
+              private recipeService: RecipeService,
+              private navCtrl: NavController){}
 
 //Property being sent from the recipes page
 ngOnInit(){
@@ -21,7 +27,17 @@ ngOnInit(){
 }
 
 onSubmit(){
-  console.log(this.recipeForm);
+ const value = this.recipeForm.value;
+ let ingredients = [];
+ if(value.ingredients.length > 0) {
+  //.map() will iterate through each array value and create an object per array item value
+    ingredients = value.ingredients.map(name => {
+      return {name: name, amount: 1}
+    });
+ }
+ this.recipeService.addRecipe(value.title, value.description, value.difficulty,ingredients );
+ this.recipeForm.reset();
+ this.navCtrl.popToRoot();
 }
 
 //action sheet popup on click will also take in inputs
