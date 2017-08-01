@@ -15,10 +15,14 @@ export class RecipesPage {
 
   constructor(private navCtrl: NavController, private recipeService: RecipeService){}
 
+  //Navigate to edit recipe page
   onNewRecipe(){
    this.navCtrl.push(EditRecipePage, {mode: 'New'});
   }
 
+  onLoadRecipe(){}
+
+  //Loads recipes once view is entered after creating a recipe in the recip-edit comp
   ionViewWillEnter(){
    this.recipes = this.recipeService.getRecipes();
    console.log(this.recipes);
