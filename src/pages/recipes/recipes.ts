@@ -21,10 +21,10 @@ export class RecipesPage {
    this.navCtrl.push(EditRecipePage, {mode: 'New'});
   }
 
-  onLoadRecipe(i){
-    let recipe = this.recipes[i];
-   this.navCtrl.push(RecipePage, recipe);
-    
+  //Method is push / navigating to the next page with an object / value
+  onLoadRecipe(recipe: Recipe, index: number){
+   this.navCtrl.push(RecipePage, {recipe: recipe, index: index});
+
   }
 
   //Loads recipes once view is entered after creating a recipe in the recip-edit comp
