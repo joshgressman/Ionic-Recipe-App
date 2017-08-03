@@ -20,4 +20,6 @@ export class RecipePage implements OnInit {
     this.index = this.navParams.get('index');
   }
 
+  //Add edit functionality
+
 }
