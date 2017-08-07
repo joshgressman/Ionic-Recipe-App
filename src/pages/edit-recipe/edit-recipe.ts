@@ -42,7 +42,11 @@ onSubmit(){
       return {name: name, amount: 1}
     });
  }
+ if(this.mode == 'Edit'){
+  this.recipeService.updateRecipe(this.index, value.title, value.description, value.difficulty,ingredients);
+} else {
  this.recipeService.addRecipe(value.title, value.description, value.difficulty,ingredients );
+ }
  this.recipeForm.reset();
  this.navCtrl.popToRoot();
 }
