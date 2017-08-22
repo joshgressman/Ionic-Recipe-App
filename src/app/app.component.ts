@@ -4,13 +4,18 @@ import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { TabsPage } from '../pages/tabs/tabs';
 import { RecipesPage } from '../pages/recipes/recipes';
+import { SigninPage } from '../pages/signin/signin';
+import { SignupPage } from '../pages/signup/signup';
 
 @Component({
   templateUrl: 'app.html'
 })
 export class MyApp {
   tabsPage = TabsPage;
+  signinPage = SigninPage;
+  signupPage = SignupPage;
 
+ //Referecnces the tabs nav
  @ViewChild('nav') nav: NavController;
 
   constructor(platform: Platform, statusBar: StatusBar, splashScreen: SplashScreen, private menuCtrl: MenuController) {
@@ -26,5 +31,10 @@ export class MyApp {
   //used for the side bar / tabs navigation
   this.nav.setRoot(page);
   this.menuCtrl.close();
-}
+  }
+
+  onLogout(){
+    
+  }
+
 }
