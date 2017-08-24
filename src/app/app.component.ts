@@ -16,7 +16,7 @@ export class MyApp {
   tabsPage = TabsPage;
   signinPage = SigninPage;
   signupPage = SignupPage;
-
+  isAuthenticated = false;
  //Referecnces the tabs nav
  @ViewChild('nav') nav: NavController;
 
@@ -25,6 +25,17 @@ export class MyApp {
     firebase.initializeApp({
       apiKey: "AIzaSyDjdKIVvYFVtKuDJbfJzs_moPfby0VmFfg",
       authDomain: "ng-recipe-book-a78ad.firebaseapp.com"
+    });
+    //Auth signin for triggered when auth state is changed
+    firebase.auth().onAuthStateChanged(user => {
+      if (user) { //Checks if user is authenticated
+        this.isAuthenticated = true;
+        //switch root page if the user is authenticated
+        this.nav.setRoot(this.tabsPage);
+      } else {
+        this.isAuthenticated = false;
+        this.nav.setRoot(this.signinPage);
+      }
     });
 
     platform.ready().then(() => {
