@@ -13,4 +13,9 @@ export class AuthService {
     return firebase.auth().signInWithEmailAndPassword(email, password);
   }
 
+  //method will removed web token
+  logout(){
+    firebase.auth().signOut();
+  }
+
 }
