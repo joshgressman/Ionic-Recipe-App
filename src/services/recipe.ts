@@ -1,11 +1,17 @@
 
+import { Injectable } from '@angular/core';
+import { Http, Response } from '@angular/http';
+import 'rxjs/Rx';
 import { Recipe } from '../models/recipe';
 import { Ingredient } from '../models/ingredient';
+import { AuthService } from './auth';
 
-
+@Injectable()
 export class RecipeService {
 
 private recipes: Recipe[] = [];
+
+constructor(private http: Http, private authService: AuthService){}
 
 addRecipe(title: string, description: string, difficulty: string, ingredients: Ingredient[]){
   this.recipes.push(new Recipe(title, description, difficulty, ingredients));
@@ -22,6 +28,33 @@ updateRecipe(index: number, title: string, description: string, difficulty: stri
 
 removeRecipe(index: number){
   this.recipes.splice(index, 1);
+}
+
+storeList(token: string){
+  const userId = this.authService.getActiveUser().uid;
+  return this.http.put('https://ng-recipe-book-a78ad.firebaseio.com/' + userId + '/recipes.json?auth=' + token, this.recipes)
+  .map((response: Response) => response.json());
+}
+
+fetchList(token: string){
+ const userId = this.authService.getActiveUser().uid;
+ return this.http.get('https://ng-recipe-book-a78ad.firebaseio.com/' + userId + '/recipes.json?auth=' + token)
+ .map((response: Response) => {
+  return response.json();
+ })
+ .do((recipes: Recipe[]) => {
+   if(recipes) {
+   this.recipes = recipes;
+   console.log("the Recipe", this.recipes);
+ } else {
+   this.recipes = [];
+   console.log("no recipe found");
+ }
+ });
+}
+
+getItems(){
+  return this.recipes.slice();
 }
 
 }
