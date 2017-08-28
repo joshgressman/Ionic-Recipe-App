@@ -42,6 +42,10 @@ export class RecipesPage {
    popover.present({ev: event});
    popover.onDidDismiss(
      data => {
+       //corrects error when no action is selected and you click away
+       if(!data){
+         return;
+       }
        if(data.action == 'load'){
          loading.present();
          this.authService.getActiveUser().getToken()

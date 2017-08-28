@@ -13,7 +13,7 @@ import { AuthService } from '../../services/auth';
 
 export class ShoppingListPage {
   ingredients: Ingredient[];
-  
+
 
   constructor(private shoppingListService: ShoppingListService, private popoverCtrl: PopoverController, private authService: AuthService, private loadingCtrl: LoadingController, private alertCtrl: AlertController) {
   }
@@ -41,6 +41,10 @@ export class ShoppingListPage {
    popover.present({ev: event});
    popover.onDidDismiss(
      data => {
+       //corrects error when no action is selected and you click away
+       if(!data){
+         return;
+       }
        if(data.action == 'load'){
          loading.present();
          this.authService.getActiveUser().getToken()

@@ -40,7 +40,14 @@ fetchList(token: string){
  const userId = this.authService.getActiveUser().uid;
  return this.http.get('https://ng-recipe-book-a78ad.firebaseio.com/' + userId + '/recipes.json?auth=' + token)
  .map((response: Response) => {
-  return response.json();
+   //Bug fix for error for recipes with no ingredients
+  const recipes: Recipe[] = response.json() ? response.json() : [];
+  for (let item of recipes){
+    if(!item.hasOwnProperty('ingredients')){
+      item.ingredients = []; //if no ingredients set to empty array
+    }
+  }
+  return recipes;
  })
  .do((recipes: Recipe[]) => {
    if(recipes) {
